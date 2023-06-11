@@ -19,3 +19,5 @@ SET NODE_OPTIONS=--openssl-legacy-provider &&
 启动项目：npm start
 # 使用方法
 登录系统：在浏览器中输入http://localhost:8080，
+#项目链接
+https://18736871304.github.io/cms-wei/dist/index.html
