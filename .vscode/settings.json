@@ -3,5 +3,8 @@
         "activityBar.background": "#2C2854",
         "titleBar.activeBackground": "#3E3876",
         "titleBar.activeForeground": "#FBFBFD"
-    }
+    },
+    "files.exclude": {
+    // "node_modules/": true
+}
 }
