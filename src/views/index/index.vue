@@ -107,7 +107,7 @@ export default {
 }
 
 .el-menu {
-  height: 100%;
+  /* height: 100%; */
 }
 
 .item {
@@ -136,6 +136,6 @@ export default {
 .content-wrapper {
   background-color: #fff;
   box-sizing: border-box;
-  margin-top: 55px;
+  margin-top: 68px;
 }
 </style>

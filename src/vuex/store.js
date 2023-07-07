@@ -7,6 +7,7 @@ Vue.use(Vuex)
 
 // 应用初始状态
 const state = {
+    userCode: '',
     count: 10,
     rightList: sessionStorage.getItem('rightList') || [],
     username: sessionStorage.getItem('user') || '',
@@ -15,6 +16,10 @@ const state = {
 
 // 定义所需的 mutations
 const mutations = {
+    // 储存账号
+    setuserCode(state, data) {
+        state.userCode = data
+    },
     // 储存侧边导航菜单
     setRightList(state, data) {
         state.rightList = data
@@ -24,6 +29,7 @@ const mutations = {
         state.username = data
         sessionStorage.setItem('username', data)
     },
+
     // 折叠按钮
     setCollapse(state, data) {
         state.isCollapse = data

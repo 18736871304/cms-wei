@@ -19,10 +19,8 @@
               @click.stop="removeTab(item.name, $event)"
             ></i>
           </el-button>
-          
-        
         </el-row>
-          <div class="hengxian"></div>
+        <div class="hengxian"></div>
         <!-- 具体内容 -->
         <el-col :span="24" class="content-wrapper">
           <transition name="fade" mode="out-in">
@@ -51,6 +49,16 @@ export default {
 
   components: {
     Main,
+  },
+
+  watch: {
+    editableTabs: {
+      handler(newVal, oldVal) {
+        if(newVal.length==0){
+          this.$router.push("/home")
+        }
+      },
+    },
   },
 
   methods: {
@@ -113,14 +121,14 @@ export default {
 </script>
 
 <style>
-.hengxian{
-      height: 13px;
-    width: 100%;
-    background: #E3E9ED;
-    margin-top: 55px;
-    z-index: 99;
-    position: fixed;
-    top: 64px;
+.hengxian {
+  height: 13px;
+  width: 100%;
+  background: #e3e9ed;
+  margin-top: 55px;
+  z-index: 99;
+  position: fixed;
+  top: 64px;
 }
 .breadcrumb-container {
   width: 100%;
@@ -146,7 +154,7 @@ export default {
 .content-wrapper {
   background-color: #fff;
   box-sizing: border-box;
-  margin-top: 55px;
+  margin-top: 68px;
 }
 .tabStyle,
 .tabStyle:hover {
@@ -167,16 +175,16 @@ a {
   color: #606266;
 }
 .content-tabs {
-     margin-bottom: 15px;
-    background: #fff;
-    padding: 10px 20px;
-    margin-left: -15px;
-    position: fixed;
-    z-index: 200;
-    display: flex;
-    width: 100%;
-    height: 55px;
-    overflow: hidden;
-    top: 64px;
+  margin-bottom: 15px;
+  background: #fff;
+  padding: 10px 20px;
+  margin-left: -15px;
+  position: fixed;
+  z-index: 200;
+  display: flex;
+  width: 100%;
+  height: 55px;
+  overflow: hidden;
+  top: 64px;
 }
 </style>

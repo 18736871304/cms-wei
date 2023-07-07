@@ -112,6 +112,8 @@ export default {
         type: "warning",
       })
         .then(() => {
+          sessionStorage.removeItem("userCode");
+          that.$router.push("/login");
           var reporParams = {
             userToken: sessionStorage.getItem("token"),
           };
@@ -264,12 +266,13 @@ export default {
   overflow: hidden;
 }
 .main aside {
-  flex: 0 0 190px;
-  width: 190px;
+  flex: 0 0 210px;
+  width: 210px;
+  overflow-y: scroll;
 }
 
 .el-menu {
-  height: 100%;
+  /* height: 100%; */
 }
 
 .collapsed {
@@ -313,6 +316,6 @@ export default {
 .content-wrapper {
   background-color: #fff;
   box-sizing: border-box;
-      margin-top: 55px;
+      margin-top: 68px;
 }
 </style>

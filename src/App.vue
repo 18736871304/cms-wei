@@ -4,6 +4,19 @@
   </div>
 </template>
 
+<script>
+export default {
+  created() {
+    if (this.$router.path !== "/home") {
+      if (sessionStorage.getItem("userCode")) {
+        this.$router.replace("home");
+      } else {
+        this.$router.replace("login");
+      }
+    }
+  },
+};
+</script>
 
 <style>
 #app {

@@ -49,7 +49,7 @@
 </template>
 
 <script>
-import { login, getAuthMenuList } from "../../api/api";
+import { login, AuthMenuList } from "../../api/api";
 import md5 from "js-md5";
 
 export default {
@@ -79,218 +79,75 @@ export default {
     },
     // 登录操作
     onLogin() {
+      var that = this;
       this.$refs.pwd.$el.getElementsByTagName("input")[0].blur();
       this.logining = true;
+      // var loginParams = {
+      //   mobile: this.ruleForm2.mobile,
+      //   password: md5(this.ruleForm2.password).toUpperCase(),
+      // };
       var loginParams = {
-        mobile: this.ruleForm2.mobile,
-        password: md5(this.ruleForm2.password).toUpperCase(),
+        userCode: "D012",
+        passWord: md5("wei123").toUpperCase(),
       };
-      console.log(loginParams);
-      this.$router.push("/home");
 
-      var rightList = [
-        {
-          path: "",
-          menuname: "用户管理",
-          childmenu: [
-            {
-              path: "/UserManage",
-              menuname: "用户管理",
-              menuid: "2000000001",
-              orderbyid: 1,
-            },
-            {
-              path: "/AuthManage",
-              menuname: "权限管理",
-              menuid: "2000000002",
-              orderbyid: 3,
-            },
-            {
-              path: "/UserAuthority",
-              menuname: "用户权限",
-              menuid: "2000000003",
-              orderbyid: 4,
-            },
-          ],
-          menuid: "0000000001",
-          orderbyid: 1,
-        },
-        {
-          path: "",
-          menuname: "内容管理",
-          childmenu: [
-            {
-              path: "/HtmlManage",
-              menuname: "标签管理",
-              menuid: "2000000004",
-              orderbyid: 1,
-            },
-          ],
-          menuid: "0000000002",
-          orderbyid: 2,
-        },
-        {
-          menuname: "卡管理",
-          childmenu: [
-            {
-              path: "/CardImport",
-              menuname: "卡导入",
-              menuid: "2000000005",
-              orderbyid: 1,
-            },
-            {
-              path: "/AddPlanGroup",
-              menuname: "关联套餐组",
-              menuid: "2000000006",
-              orderbyid: 2,
-            },
-            {
-              path: "/CardDistribute",
-              menuname: "卡下发",
-              menuid: "2000000007",
-              orderbyid: 3,
-            },
-            {
-              path: "/CardChange",
-              menuname: "更换卡",
-              menuid: "2000000010",
-              orderbyid: 3,
-            },
-            {
-              path: "/CardSeal",
-              menuname: "发货(卡销售)",
-              menuid: "2000000008",
-              orderbyid: 4,
-            },
-          ],
-          menuid: "0000000003",
-          orderbyid: 3,
-        },
-        {
-          path: "",
-          menuname: "套餐管理",
-          childmenu: [
-            {
-              path: "/SalePlanManage",
-              menuname: "套餐组管理",
-              menuid: "2000000011",
-              orderbyid: 1,
-            },
-            {
-              path: "/DistributeToMe",
-              menuname: "分配给我的",
-              menuid: "2000000012",
-              orderbyid: 2,
-            },
-            {
-              path: "/DistributeByMe",
-              menuname: "我分配的",
-              menuid: "2000000013",
-              orderbyid: 3,
-            },
-            {
-              path: "/SaleQuery",
-              menuname: "套餐查询",
-              menuid: "2000000014",
-              orderbyid: 4,
-            },
-          ],
-          menuid: "0000000004",
-          orderbyid: 4,
-        },
-        {
-          path: "",
-          menuname: "代理商管理",
-          childmenu: [
-            {
-              path: "/AgentUserManage",
-              menuname: "代理商录入",
-              menuid: "2000000015",
-              orderbyid: 1,
-            },
-            {
-              path: "/CusToAgent",
-              menuname: "客户转代理",
-              menuid: "2000000016",
-              orderbyid: 2,
-            },
-          ],
-          menuid: "0000000005",
-          orderbyid: 5,
-        },
-        {
-          path: "",
-          menuname: "综合查询",
-          childmenu: [
-            {
-              path: "/CardQuery",
-              menuname: "卡信息查询",
-              menuid: "2000000017",
-              orderbyid: 1,
-            },
-            {
-              path: "/RechargeQuery",
-              menuname: "充值记录",
-              menuid: "2000000019",
-              orderbyid: 2,
-            },
-          ],
-          menuid: "0000000006",
-          orderbyid: 6,
-        },
-        {
-          path: "",
-          menuname: "结算管理",
-          childmenu: [
-            {
-              path: "/WithdrawQuery",
-              menuname: "提现查询",
-              menuid: "2000000020",
-              orderbyid: 1,
-            },
-            {
-              path: "/WithdrawExam",
-              menuname: "提现审批",
-              menuid: "2000000021",
-              orderbyid: 2,
-            },
-          ],
-          menuid: "0000000007",
-          orderbyid: 7,
-        },
-        { menuname: "修改密码", menuid: "0000000099", orderbyid: 99 },
-      ];
-      this.$store.commit("setRightList", JSON.stringify(rightList));
-      // login(loginParams).then((res) => {
-      //   this.logining = false;
-      //   if (res.code != "0") {
-      //     this.$message({
-      //       message: "登录失败，请联系管理员",
-      //       type: "error",
-      //     });
-
-      //   } else {
-      //     this.getAuthMenuList(res.userToken);
-
-      //     // this.$store.commit("setUsername", JSON.stringify(this.rightList));
-      //     //    this.$store.commit("setRightList", JSON.stringify(this.rightList));
-      //     // this.$router.push("/home");
-      //     this.$store.commit("setUsername", JSON.stringify(loginParams));
-      //     sessionStorage.setItem("token", res.userToken);
-      //     // sessionStorage.setItem("token","0d637e57deb0423f934f22fff8e5756a");
-      //   }
-      // });
+      login(loginParams).then((res) => {
+        console.log(res);
+        that.logining = false;
+        if (res.code == 0) {
+          that.$store.commit(
+            "setuserCode",
+            JSON.stringify(loginParams.userCode),
+            that.AuthMenuList(),
+            sessionStorage.setItem('userCode', loginParams.userCode)
+          );  
+        }
+      });
     },
     //获取菜单
-    getAuthMenuList(token) {
-      var MenuParams = {
-        userToken: token,
-      };
-      getAuthMenuList(MenuParams).then((res) => {
-        var rightList = eval("(" + JSON.stringify(res) + ")");
-        this.$store.commit("setRightList", JSON.stringify(rightList));
-        // this.$router.push(rightList[0].childmenu[0].path);
-        this.$router.push("/home");
+
+    AuthMenuList() {
+      var params = {};
+      AuthMenuList(params).then((res) => {
+        console.log(res);
+        let rightList = [];
+        if (res.length > 0) {
+          for (let i = 0; i < res.length; i++) {
+            if (res[i].children.length > 0) {
+              let childmenuList = [];
+              for (let j = 0; j < res[i].children.length; j++) {
+                childmenuList.push({
+                  path: res[i].children[j].url.replace(
+                    "commonMenu.do?menuurl=",
+                    "/"
+                  ),
+                  menuname: res[i].children[j].text,
+                  menuid: res[i].children[j].id,
+                });
+              }
+              rightList.push({
+                path: res[i].url,
+                menuname: res[i].text,
+                childmenu: childmenuList,
+                menuid: res[i].id,
+              });
+            } else {
+              rightList.push({
+                path: res[i].url,
+                menuname: res[i].text,
+                childmenu: [],
+                menuid: res[i].id,
+              });
+            }
+          }
+          this.$store.commit("setRightList", JSON.stringify(rightList));
+          console.log(rightList);
+          this.$router.push("/home");
+        }
+
+        this.logining = false;
+        if (res.code == 0) {
+        }
       });
     },
   },

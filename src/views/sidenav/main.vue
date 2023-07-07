@@ -210,7 +210,7 @@ menu-collapsed.main aside
 .content-wrapper {
   background-color: #fff;
   box-sizing: border-box;
-      margin-top: 55px;
+      margin-top: 68px;
 }
 
 

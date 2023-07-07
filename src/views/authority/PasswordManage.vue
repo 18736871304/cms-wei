@@ -1,5 +1,5 @@
 <template>
-  <div>创建报告</div>
+  <div>密码管理</div>
 </template>
 
 <script>

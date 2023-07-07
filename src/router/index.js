@@ -22,127 +22,64 @@ var routes = [{
   {
     path: '/home',
     component: () => import("@/views/index/index.vue"),
-    name: '系统管理',
+    // name: '系统管理',
     iconCls: 'fa fa-home',
     children: [{
         path: '/home',
         component: () => import("@/views/home/home.vue"),
         name: '欢迎页',
       },
+
+      // admin
       {
-        path: '/UserManage',
-        component: () => import("@/views/organ/UserManage.vue"),
-        name: '用户管理',
+        path: '/admin/team/teamMan',
+        component: () => import("@/views/admin/team/teamMan.vue"),
+        name: '团队管理'
       },
       {
-        path: '/AuthManage',
-        component: () => import("@/views/organ/AuthManage.vue"),
-        name: '权限管理',
+        path: '/admin/user/userunlock',
+        component: () => import("@/views/admin/user/userunlock.vue"),
+        name: '用户解锁'
+      },
+      // organ
+      {
+        path: '/organ/OrganManage',
+        component: () => import("@/views/organ/OrganManage.vue"),
+        name:'机构管理'
+      },
+
+
+      //authority
+      {
+        path: '/authority/AuthManage',
+        component: () => import("@/views/authority/AuthManage.vue"),
+        name:'权限管理'
       },
       {
-        path: '/UserAuthority',
-        component: () => import("@/views/organ/UserAuthority.vue"),
-        name: '用户权限',
-      },
-      //  正式内容
-      {
-        path: '/HtmlManage',
-        component: () => import("@/views/contentManagement/HtmlManage.vue"),
-        name: '标签管理',
-      },
-      // 卡管理
-      {
-        path: '/CardImport',
-        component: () => import("@/views/cardManagement/CardImport.vue"),
-        name: '卡导入',
+        path: '/authority/UserAuthority',
+        component: () => import("@/views/authority/UserAuthority.vue"),
+        name:'用户权限'
       },
       {
-        path: '/AddPlanGroup',
-        component: () => import("@/views/cardManagement/AddPlanGroup.vue"),
-        name: '关联套餐组',
+        path: '/authority/PasswordManage',
+        component: () => import("@/views/authority/PasswordManage.vue"),
+        name:'密码管理'
       },
-      {
-        path: '/CardDistribute',
-        component: () => import("@/views/cardManagement/CardDistribute.vue"),
-        name: '卡下发',
-      },
-      {
-        path: '/CardChange',
-        component: () => import("@/views/cardManagement/CardChange.vue"),
-        name: '更换卡',
-      },
-      {
-        path: '/CardSeal',
-        component: () => import("@/views/cardManagement/CardSeal.vue"),
-        name: '发货(卡销售)',
-      },
+
       // {
-      //   path: '/CardQuery1',
-      //   component: () => import("@/views/cardManagement/CardQuery1.vue"),
-      //   name: '卡信息查询',
+      //   path: '/AuthManage',
+      //   component: () => import("@/views/organ/AuthManage.vue"),
       // },
-      // 套餐管理
-      {
-        path: '/SalePlanManage',
-        component: () => import("@/views/packageManagement/SalePlanManage.vue"),
-        name: '套餐管理',
-      },
-      {
-        path: '/DistributeToMe',
-        component: () => import("@/views/packageManagement/DistributeToMe.vue"),
-        name: '分配给我的',
-      }, {
-        path: '/DistributeByMe',
-        component: () => import("@/views/packageManagement/DistributeByMe.vue"),
-        name: '我分配的',
-      }, {
-        path: '/SaleQuery',
-        component: () => import("@/views/packageManagement/SaleQuery.vue"),
-        name: '套餐查询',
-      },
-      // 代理商管理
-      {
-        path: '/AgentUserManage',
-        component: () => import("@/views/agentManagement/AgentUserManage.vue"),
-        name: '代理商录入',
-      },
-
-      {
-        path: '/CusToAgent',
-        component: () => import("@/views/agentManagement/CusToAgent.vue"),
-        name: '客户转代理',
-      },
-      // 综合查询comprehensiveQuery
-      {
-        path: '/CardQuery',
-        component: () => import("@/views/comprehensiveQuery/CardQuery.vue"),
-        name: '卡信息查询',
-      },
-      {
-        path: '/RechargeQuery',
-        component: () => import("@/views/comprehensiveQuery/RechargeQuery.vue"),
-        name: '充值纪录',
-      },
-
-      // 结算管理settlementManagement
-
-      {
-        path: '/WithdrawQuery',
-        component: () => import("@/views/settlementManagement/WithdrawQuery.vue"),
-        name: '提现查询',
-      },
-      {
-        path: '/WithdrawExam',
-        component: () => import("@/views/settlementManagement/WithdrawExam.vue"),
-        name: '提现审批',
-      },
+      // {
+      //   path: '/UserAuthority',
+      //   component: () => import("@/views/organ/UserAuthority.vue"),
+      // },
 
 
-      {
-        path: '/PasswordManage',
-        component: () => import("@/views/organ/PasswordManage.vue"),
-        name: '密码管理',
-      },
+
+
+
+
     ]
   },
 
