@@ -128,7 +128,7 @@ export default {
   margin-top: 55px;
   z-index: 99;
   position: fixed;
-  top: 64px;
+  top: 50px;
 }
 .breadcrumb-container {
   width: 100%;
@@ -185,6 +185,7 @@ a {
   width: 100%;
   height: 55px;
   overflow: hidden;
-  top: 64px;
+  top: 50px;
+  border-top: 1px solid #999;
 }
 </style>

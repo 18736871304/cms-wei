@@ -1,14 +1,14 @@
 <template>
   <el-col :span="24" class="header">
-    <el-col :span="1">
-      <!-- <img src="../../assets/user.png" alt="" class="logo_img"> -->
+    <el-col :span="1"   :class="isCollapse ? 'head_logo' : 'big_logo'" >
+      <img src="../../assets/logo.png" alt=""    :class="isCollapse ? 'logo_img' : 'big_logo_img'"           class="logo_img" />
     </el-col>
-    <el-col
+    <!-- <el-col
       :span="14"
       :class="isCollapse ? 'nologo' : 'logo'"
       style=" font-size: 24px;"
       >{{ sysName }}</el-col
-    >
+    > -->
 
     <el-col :span="2">
       <el-radio-group
@@ -89,7 +89,7 @@ import { logout } from "../../api/api";
 export default {
   data() {
     return {
-      sysName: "业务管理系统",
+      sysName: "核心管理系统",
       sysUserName: "",
       sysUserAvatar: "",
       isCollapse: false,
@@ -118,10 +118,10 @@ export default {
             userToken: sessionStorage.getItem("token"),
           };
           logout(reporParams).then((res) => {
-             sessionStorage.removeItem("rightList");
-              sessionStorage.removeItem("token");
-              sessionStorage.removeItem("username");
-              that.$router.push("/login");
+            sessionStorage.removeItem("rightList");
+            sessionStorage.removeItem("token");
+            sessionStorage.removeItem("username");
+            that.$router.push("/login");
             // if (res.code == "0") {
             //   sessionStorage.removeItem("rightList");
             //   sessionStorage.removeItem("token");
@@ -173,8 +173,11 @@ export default {
 .header {
   width: 100%;
   height: 64px;
-  background: url(../../assets/header.jpg) no-repeat center;
+  /* background: url(../../assets/header.jpg) no-repeat center; */
   background-size: 100% 100%;
+  border: 1px solid #999;
+  border-left: 0;
+  border-bottom: 0;
 }
 
 .menu-expanded {
@@ -183,12 +186,24 @@ export default {
 }
 .logo_img {
   width: 60px;
-  height: 60px;
+  height: 50px;
+}
+
+.big_logo{
+  width: 209.5px;
+    background: #001529;
+    height: 50px;
+}
+.big_logo_img{
+  width: 160px;
+    height: 50px;
 }
 .logo {
-  width: 200px;
+  width: 145.5px;
   color: #fff;
   text-align: center;
+  background: #001529;
+  height: 100%;
   line-height: 60px;
 }
 .nologo {
@@ -212,15 +227,15 @@ export default {
 }
 .el-icon-s-fold {
   font-size: 34px;
-  color: #fff;
-  line-height: 60px;
+  color: #999;
+  line-height:50px;
 }
 .userinfo-inner {
   display: inline-block;
 }
 .username {
   font-size: 15px;
-  color: #fff;
+  color: #999;
   display: inline-block;
 }
 .username span {
@@ -231,7 +246,7 @@ export default {
 .userinfo-inner img {
   width: 40px;
   height: 40px;
-  margin: 10px auto;
+  margin: 5px auto;
   vertical-align: middle;
   border-radius: 50%;
 }
@@ -261,18 +276,37 @@ export default {
 .main {
   display: flex;
   position: absolute;
-  top: 64px;
+  top: 50px;
   bottom: 0px;
   overflow: hidden;
 }
 .main aside {
   flex: 0 0 210px;
   width: 210px;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 .el-menu {
+  /* overflow: scroll; */
   /* height: 100%; */
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 1px;
+  margin-left: -6px;
+}
+/* 滑块部分 */
+::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  /* background-color:red; */
+  background-color: #9093994d;
+}
+/* 轨道部分 */
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
+  background: #001529;
+  border-radius: 5px;
 }
 
 .collapsed {
@@ -299,8 +333,8 @@ export default {
 .content-container {
   flex: 1;
   overflow-y: scroll;
-  padding:0 15px 20px;
-  background:#E3E9ED;
+  padding: 0 15px 20px;
+  background: #e3e9ed;
 }
 
 .title {
@@ -316,6 +350,14 @@ export default {
 .content-wrapper {
   background-color: #fff;
   box-sizing: border-box;
-      margin-top: 68px;
+  margin-top: 68px;
+}
+
+.head_logo {
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #001529;
 }
 </style>

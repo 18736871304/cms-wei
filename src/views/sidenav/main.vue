@@ -3,9 +3,9 @@
     <!-- 折叠按钮 -->
     <!--导航菜单   v-show="!collapsed"  :collapse="isCollapse"-->
     <el-menu
-      background-color="#fff"
-      text-color="#606266"
-      active-text-color="#409eff"
+      background-color="#001529"
+      text-color="#ffffffb3"
+      active-text-color="#fff"
       unique-opened
       router
       :default-active="$router.path"
@@ -14,17 +14,18 @@
       @close="handleclose"
       @select="handleselect"
       :collapse="isCollapse"
+      style="overflow: scroll;height: 100%;"
     >
       <template v-for="(item, index) in rightList" >
         <el-submenu :key='index'
           :index="index + ''"
-          style="text-align: left;  color:#fff"
+          style="text-align: left;  color:#001529"
         >
           <template slot="title">
             <i
               :class="item.icon"
               class="el-icon-message"
-              style="margin-right:5px; color:#fff"
+              style="margin-right:5px; color:#001529"
             ></i>
             <span slot="title">{{ item.menuname }}</span>
           </template>
@@ -42,12 +43,12 @@
           :key="item.index"
           v-if="item.leaf && item.child.length > 0"
           :index="item.child[0].path"
-          style="text-align: left; color:#fff"
+          style="text-align: left; color:#001529"
         >
           <i
             :class="item.icon"
             class="el-icon-s-data"
-            style="margin-right:5px; color:#fff"
+            style="margin-right:5px; color:#001529"
           ></i>
           <span slot="title">{{ item.child[0].menuname }}</span>
         </el-menu-item>
@@ -141,13 +142,13 @@ export default {
 
 .el-icon-s-fold {
   font-size: 34px;
-  color: #fff;
-  line-height: 60px;
+  color: #001529;
+  line-height: 50px;
 }
 
 .username {
   font-size: 15px;
-  color: #fff;
+  color: #001529;
   display: inline-block;
 }
 .username span {
@@ -158,7 +159,7 @@ export default {
 .main {
   display: flex;
   position: absolute;
-  top: 64px;
+  top: 50px;
   bottom: 0px;
   overflow: hidden;
 }
@@ -200,7 +201,7 @@ menu-collapsed.main aside
 .title {
   width: 200px;
   float: left;
-  color: #fff;
+  color: #001529;
 }
 
 .breadcrumb-inner {
@@ -208,7 +209,7 @@ menu-collapsed.main aside
 }
 
 .content-wrapper {
-  background-color: #fff;
+  background-color: #001529;
   box-sizing: border-box;
       margin-top: 68px;
 }
@@ -231,19 +232,20 @@ menu-collapsed.main aside
   z-index: 100;
 }
 .el-submenu__title .el-submenu__icon-arrow {
-  color: #fff;
+  color: #001529;
 }
 .el-submenu .el-menu-item{
   min-width: 100px;
+  background-color: #0c2135!important;
       /* font-weight: bold; */
 }
 .el-submenu__title i{
-  color: #606266!important;
+  color: #ffffffb3!important;
 }
 .el-menu .is-active{
-  background: #eef1f6 !important;
+  background: #1890ff !important;
 }
 .el-submenu__title{
-font-weight: bold;
+/* font-weight: bold; */
 }
 </style>

@@ -52,15 +52,15 @@ export default {
 }
 .el-icon-s-fold {
   font-size: 34px;
-  color: #fff;
-  line-height: 60px;
+  color: #999;
+  line-height: 50px;
 }
 .userinfo-inner {
   display: inline-block;
 }
 .username {
   font-size: 15px;
-  color: #fff;
+  color: #999;
   display: inline-block;
 }
 .username span {
@@ -71,7 +71,7 @@ export default {
 .userinfo-inner img {
   width: 40px;
   height: 40px;
-  margin: 10px auto;
+  margin: 5px auto;
   vertical-align: middle;
   border-radius: 50%;
 }
@@ -101,7 +101,7 @@ export default {
 .main {
   display: flex;
   position: absolute;
-  top: 64px;
+  top: 50px;
   bottom: 0px;
   overflow: hidden;
 }
