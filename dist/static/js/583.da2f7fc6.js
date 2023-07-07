@@ -1,0 +1,2 @@
+"use strict";(self["webpackChunkwei"]=self["webpackChunkwei"]||[]).push([[583],{79583:(s,t,a)=>{a.r(t),a.d(t,{default:()=>u});var e=function(){var s=this,t=s._self._c;return t("img",{staticClass:"img-404",attrs:{src:a(78288),alt:""}})},l=[],i=a(1001),n={},r=(0,i.Z)(n,e,l,!1,null,null,null);const u=r.exports},78288:(s,t,a)=>{s.exports=a.p+"static/img/404.b1fa4abd.png"}}]);
+//# sourceMappingURL=583.da2f7fc6.js.map

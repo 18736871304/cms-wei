@@ -166,7 +166,7 @@ export default {
 .main aside {
   flex: 0 0 190px;
   width: 190px;
-  background-color: rgb(42, 104, 201);
+  /* background-color: rgb(42, 104, 201); */
   overflow-y: hidden;
 }
 
