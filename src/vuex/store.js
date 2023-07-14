@@ -11,7 +11,8 @@ const state = {
     count: 10,
     rightList: sessionStorage.getItem('rightList') || [],
     username: sessionStorage.getItem('user') || '',
-    isCollapse: false
+    isCollapse: false,
+    activeRouter:'',//当前路由
 }
 
 // 定义所需的 mutations
@@ -37,6 +38,14 @@ const mutations = {
     // 保存后台返回菜单
     saveMenuList(state, data) {
         state.rightList = data;
+    },
+
+
+
+
+    setActiveIndex(state, value) {
+        console.log(value)
+        state.activeRouter = value
     },
 
     INCREMENT(state) {

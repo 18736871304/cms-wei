@@ -172,10 +172,10 @@ export default {
 }
 .header {
   width: 100%;
-  height: 64px;
+  height: 50px;
   /* background: url(../../assets/header.jpg) no-repeat center; */
   background-size: 100% 100%;
-  border: 1px solid #999;
+  border: 1px solid #eee;
   border-left: 0;
   border-bottom: 0;
 }
@@ -286,10 +286,7 @@ export default {
   /* overflow-y: scroll; */
 }
 
-.el-menu {
-  /* overflow: scroll; */
-  /* height: 100%; */
-}
+
 
 ::-webkit-scrollbar {
   width: 6px;
@@ -304,8 +301,8 @@ export default {
 }
 /* 轨道部分 */
 ::-webkit-scrollbar-track {
-  box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2);
-  background: #001529;
+  /* box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2); */
+  /* background: #001529; */
   border-radius: 5px;
 }
 

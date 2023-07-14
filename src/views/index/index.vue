@@ -106,9 +106,7 @@ export default {
   overflow: hidden;
 }
 
-.el-menu {
-  /* height: 100%; */
-}
+
 
 .item {
   position: relative;

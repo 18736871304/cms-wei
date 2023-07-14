@@ -310,7 +310,7 @@ export default {
         console.log(res);
         this.provinceNameList = res;
       });
-      this.getorganList(1);
+      // this.getorganList(1);
     },
     getCity() {
       cityCombox({ province: this.editprovinceName }).then((res) => {

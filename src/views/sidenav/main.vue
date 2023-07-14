@@ -14,10 +14,12 @@
       @close="handleclose"
       @select="handleselect"
       :collapse="isCollapse"
+      ref="menu"
       style="overflow: scroll;height: 100%;"
     >
-      <template v-for="(item, index) in rightList" >
-        <el-submenu :key='index'
+      <template v-for="(item, index) in rightList">
+        <el-submenu
+          :key="index"
           :index="index + ''"
           style="text-align: left;  color:#001529"
         >
@@ -73,28 +75,50 @@ export default {
 
   computed: mapState({
     ...mapState(["isCollapse"]),
-  
+
+    ...mapState(["activeRouter"]),
     rightList() {
       return eval("(" + this.$store.state.rightList + ")"); //用computed接收
     },
+    defaultActive() {
+      return this.$router.path;
+    },
   }),
 
-  created() {
-    
+  watch: {
+    activeRouter: {
+      handler(newVal, oldVal) {
+        // this.handleopen(newVal);
+      },
+    },
   },
 
+  created() {},
+
   methods: {
-    handleopen() {},
+    handleopen(routerName) {
+      // console.log(routerName);
+      // var aa = [];
+      // let rightList = eval("(" + this.$store.state.rightList + ")");
+      // for (var i = 0; i < rightList.length; i++) {
+      //   let rightchildmenu = rightList[i].childmenu;
+      //   for (var j = 0; j < rightchildmenu.length; j++) {
+      //     if (rightchildmenu[j].menuname == routerName.name) {
+      //       console.log(rightchildmenu);
+      //       this.$refs.menu.open(i, rightchildmenu[j].path);
+      //     }
+      //   }
+      // }
+    },
     handleclose() {},
 
-    handleselect: function(key, keyPath) {
-
+    handleselect(key, keyPath) {
+      console.log(key, keyPath);
       if (key == null) {
         return;
       }
       var aaa = "";
       var lists = this.rightList;
-
       for (let i = 0; i < lists.length; i++) {
         if (lists[i].childmenu) {
           var bbb = lists[i].childmenu;
@@ -178,8 +202,7 @@ export default {
 .item {
   position: relative;
 }
-menu-collapsed.main aside
-.submenu {
+menu-collapsed.main aside .submenu {
   position: absolute;
   top: 0px;
   left: 60px;
@@ -211,9 +234,8 @@ menu-collapsed.main aside
 .content-wrapper {
   background-color: #001529;
   box-sizing: border-box;
-      margin-top: 68px;
+  margin-top: 68px;
 }
-
 
 .fa-home {
   font-size: 20px;
@@ -234,18 +256,18 @@ menu-collapsed.main aside
 .el-submenu__title .el-submenu__icon-arrow {
   color: #001529;
 }
-.el-submenu .el-menu-item{
+.el-submenu .el-menu-item {
   min-width: 100px;
-  background-color: #0c2135!important;
-      /* font-weight: bold; */
+  background-color: #0c2135 !important;
+  /* font-weight: bold; */
 }
-.el-submenu__title i{
-  color: #ffffffb3!important;
+.el-submenu__title i {
+  color: #ffffffb3 !important;
 }
-.el-menu .is-active{
+.el-menu .is-active {
   background: #1890ff !important;
 }
-.el-submenu__title{
-/* font-weight: bold; */
+.el-submenu__title {
+  /* font-weight: bold; */
 }
 </style>

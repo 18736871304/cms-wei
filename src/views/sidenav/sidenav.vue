@@ -6,21 +6,49 @@
     <section class="content-container">
       <div class="grid-content bg-purple-light">
         <!-- 顶部导航 -->
-        <el-row class="content-tabs">
-          <el-button
-            type="primary"
-            v-for="item in editableTabs"
-            :key="item.name"
-            class="tabStyle"
+        <div class="guding">
+          <el-row
+            class="content-tabs  "
+            ref="titleNav"
+            :style="'width:' + gudingWidth + 'px'"
           >
-            <router-link :to="item.content">{{ item.title }} </router-link>
             <i
-              class="el-icon-close el-icon--right"
-              @click.stop="removeTab(item.name, $event)"
+              v-if="isShow"
+              leftIcon
+              class="el-icon-d-arrow-left scroll"
+              @click="toLeft"
             ></i>
-          </el-button>
-        </el-row>
-        <div class="hengxian"></div>
+
+            <el-button
+              type="primary"
+              v-for="item in editableTabs"
+              :key="item.name"
+              class="tabStyle"
+            >
+              <div
+                :class="{ activeLine: routeTitle == item.title }"
+                class="lineBox"
+              >
+                <router-link ref="ss" :to="item.content"
+                  >{{ item.title }}
+                </router-link>
+                <i
+                  v-if="!(item.name == 0)"
+                  class="el-icon-close el-icon--right"
+                  @click.stop="removeTab(item.name, item.title, $event)"
+                ></i>
+              </div>
+            </el-button>
+
+            <i
+              v-if="isShow"
+              rightIcon
+              class="el-icon-d-arrow-right scroll"
+              @click="toRight"
+            ></i>
+          </el-row>
+        </div>
+        <!-- <div class="hengxian"></div> -->
         <!-- 具体内容 -->
         <el-col :span="24" class="content-wrapper">
           <transition name="fade" mode="out-in">
@@ -37,13 +65,17 @@ import Main from "./main";
 export default {
   data() {
     return {
+      isShow: false,
       collapsed: false,
       activeTab: "1", //默认显示的tab
       tabIndex: 1, //tab目前显示数
       editableTabsValue: "",
-      editableTabs: [],
+      editableTabs: [{ content: "/home", name: "0", title: "首页" }],
       lists: [],
       rouStyle: "",
+      routeTitle: "", //当前路由
+      gudingWidth: "",
+      scrollLeftNum: "", //当前点击的路由前面有几个
     };
   },
 
@@ -54,10 +86,18 @@ export default {
   watch: {
     editableTabs: {
       handler(newVal, oldVal) {
-        if(newVal.length==0){
-          this.$router.push("/home")
+        if (newVal.length == 0) {
+          this.$router.push("/home");
         }
       },
+    },
+
+    $route: {
+      handler: function(route) {
+        this.routeTitle = route.name;
+        this.cejv(this.routeTitle);
+      },
+      immediate: true,
     },
   },
 
@@ -65,6 +105,51 @@ export default {
     handleopen() {},
     handleclose() {},
     handleselect: function() {},
+    toLeft() {
+      console.log("往左");
+      this.move("left");
+    },
+    toRight() {
+      console.log("往右");
+      this.move("right");
+    },
+
+    move(direction) {
+      if (direction === "left") {
+        this.$refs.titleNav.$el.scrollLeft =
+          this.$refs.titleNav.$el.scrollLeft - 300;
+      } else {
+        this.$refs.titleNav.$el.scrollLeft =
+          this.$refs.titleNav.$el.scrollLeft + 300;
+      }
+    },
+
+    cejv(title) {
+      var pageWidth = document.documentElement.clientWidth - 240;
+      if (this.$refs["titleNav"] != undefined) {
+        var navWidth = this.$refs["titleNav"].$el.clientWidth;
+      } else {
+        var navWidth = 69;
+      }
+      if (navWidth >= pageWidth) {
+        this.gudingWidth = pageWidth;
+        this.isShow = true;
+      } else {
+        this.isShow = false;
+      }
+      for (var i = 0; i < this.editableTabs.length; i++) {
+        if (this.editableTabs[i].title == title) {
+          this.scrollLeftNum = this.editableTabs[i].name;
+        }
+      }
+      if (Number(this.scrollLeftNum) < 11) {
+        if (this.$refs.titleNav != undefined) {
+          this.$refs.titleNav.$el.scrollLeft = 0;
+        }
+      } else {
+        this.$refs.titleNav.$el.scrollLeft = 2800;
+      }
+    },
 
     //添加面包屑  子父传值， 父元素在这里接受子元素传递过来的值
     childByValue(data, e) {
@@ -73,48 +158,38 @@ export default {
       if (tabs.length != 0) {
         for (let i = 0; i < tabs.length; i++) {
           if (tabs[i].content == data[1] || tabs[i].content == data[0]) {
+            this.scrollLeftNum = tabs[i].name;
             return;
           }
         }
       }
-      this.editableTabsValue = data[0];
-      let navpath = data[1];
-      if (data.length == "2" || data[1] == data[2]) {
-        navpath = data[0];
-      }
-      let newTabName = ++this.tabIndex + "";
-      if (data.length == "2") {
-        this.editableTabs.push({
-          title: data[1],
-          name: newTabName,
-          content: navpath,
-        });
-      } else {
-        this.editableTabs.push({
-          title: data[2],
-          name: newTabName,
-          content: navpath,
-        });
-      }
-      this.editableTabsValue = newTabName;
+      this.editableTabs.push({
+        title: data[2],
+        name: this.editableTabs.length,
+        content: data[1],
+      });
+      // this.$refs.titleNav.$el.scrollLeft=6000
+      this.scrollLeftNum = this.editableTabs.length;
     },
 
     //移除tabs
-    removeTab(data) {
+    removeTab(data, title) {
       let tabs = this.editableTabs;
-      let activeName = this.editableTabsValue;
-      if (activeName === data[1]) {
-        tabs.forEach((tab, index) => {
-          if (tab.name === data[index].name) {
-            let nextTab = tabs[index + 1] || tabs[index - 1];
-            if (nextTab) {
-              activeName = nextTab.name;
-            }
-          }
-        });
-      }
-      this.editableTabsValue = activeName;
       this.editableTabs = tabs.filter((tab) => tab.name !== data);
+      for (var i = 0; i < this.editableTabs.length; i++) {
+        this.editableTabs[i].name = i;
+      }
+      if (title == this.routeTitle) {
+        this.$router.push(this.editableTabs[data - 1].content);
+      } else {
+        this.cejv(this.editableTabs[data].title);
+      }
+      if (this.editableTabs.length <= 10) {
+        this.isShow = false;
+      } else {
+        this.gudingWidth = document.documentElement.clientWidth - 240;
+        this.isShow = true;
+      }
     },
   },
 };
@@ -156,23 +231,36 @@ export default {
   box-sizing: border-box;
   margin-top: 68px;
 }
-.tabStyle,
-.tabStyle:hover {
-  color: #fff;
-  background-color: #409eff;
-  border-color: #409eff;
+.tabStyle {
+  color: #606266;
+  background-color: #fff;
+  border: 0;
   float: left;
-  padding: 10px 7px;
+  padding: 10px 5px;
+}
+.content-tabs .el-button--primary:hover {
+  color: #606266;
+  background-color: #fff;
+}
+
+.tabStyle span a {
+  padding-left: 12px;
+  color: #606266;
+  padding-right: 19px;
+}
+.lineBox {
+  display: flex;
+  width: auto;
 }
 .el-icon--right {
-  margin-left: 10px;
+  margin-left: 5px;
 }
 a {
   color: #fff;
   text-decoration: none;
 }
 .router-link-active {
-  color: #606266;
+  color: #1890ff !important;
 }
 .content-tabs {
   margin-bottom: 15px;
@@ -182,10 +270,72 @@ a {
   position: fixed;
   z-index: 200;
   display: flex;
+  height: 52px;
+  overflow-x: scroll;
+  top: 52px;
+}
+.el-button--primary:active {
+  background-color: #fff;
+}
+
+.tabStyle .el-icon-close {
+  display: none;
+}
+
+.tabStyle :hover .el-icon-close {
+  display: block;
+}
+.tabStyle :hover a {
+  padding-right: 0px;
+}
+
+.tabStyle:nth-child(1) span .lineBox {
+  padding-right: 19px;
+}
+.tabStyle .activeLine {
+  border-bottom: 1px solid #1890ff;
+  height: 25px;
+}
+
+.router-link-active + .el-icon-close {
+  color: #1890ff;
+}
+
+.el-button + .el-button {
+  margin-left: 0;
+}
+
+.grid-content {
   width: 100%;
-  height: 55px;
-  overflow: hidden;
+  background: #fff;
+  height: 52px;
+  border-top: 2px solid #eee;
+}
+.scroll {
+  line-height: 52px;
+  width: 30px;
+  height: 52px;
+  background: #fff;
+  cursor: pointer;
+}
+.el-icon-d-arrow-left {
+  position: fixed;
+  top: 52px;
+  left: 210px;
+}
+.el-icon-d-arrow-right {
+  position: fixed;
+  top: 52px;
+  right: 0px;
+}
+
+.guding {
+  width: 100%;
+  background: #fff;
+  height: 50px;
+  border-top: 2px solid #eee;
+  position: fixed;
   top: 50px;
-  border-top: 1px solid #999;
+  z-index: 2000;
 }
 </style>
