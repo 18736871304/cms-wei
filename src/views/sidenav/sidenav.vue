@@ -6,7 +6,7 @@
     <section class="content-container">
       <div class="grid-content bg-purple-light">
         <!-- 顶部导航 -->
-        <div class="guding">
+        <div class="guding" :class="isCollapse ? 'collapsed' : 'expanded'">
           <el-row
             class="content-tabs  "
             ref="titleNav"
@@ -16,6 +16,7 @@
               v-if="isShow"
               leftIcon
               class="el-icon-d-arrow-left scroll"
+              :class="isCollapse ? 'arrow-left' : 'el-icon-d-arrow-left'"
               @click="toLeft"
             ></i>
 
@@ -61,6 +62,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 import Main from "./main";
 export default {
   data() {
@@ -82,7 +84,9 @@ export default {
   components: {
     Main,
   },
-
+  computed: mapState({
+    ...mapState(["isCollapse"]),
+  }),
   watch: {
     editableTabs: {
       handler(newVal, oldVal) {
@@ -95,9 +99,16 @@ export default {
     $route: {
       handler: function(route) {
         this.routeTitle = route.name;
-        this.cejv(this.routeTitle);
+        this.cejv();
       },
       immediate: true,
+    },
+
+    isCollapse: {
+      handler(newVal, oldVal) {
+        console.log(newVal, oldVal);
+        this.cejv();
+      },
     },
   },
 
@@ -122,16 +133,18 @@ export default {
       }
     },
 
-    cejv(title) {
-      var pageWidth = document.documentElement.clientWidth - 240;
+    cejv() {
+      if (!this.isCollapse) {
+        var pageWidth = document.documentElement.clientWidth - 240;
+      } else {
+        var pageWidth = document.documentElement.clientWidth - 60;
+      }
 
       if (this.$refs["titleNav"] != undefined) {
         var navWidth = this.$refs.titleNav.$el.scrollWidth;
       } else {
         var navWidth = 69;
       }
-
-      console.log(navWidth, pageWidth);
 
       if (navWidth > pageWidth) {
         this.gudingWidth = pageWidth;
@@ -140,7 +153,6 @@ export default {
       } else {
         this.isShow = false;
       }
-
     },
 
     //添加面包屑  子父传值， 父元素在这里接受子元素传递过来的值
@@ -174,7 +186,7 @@ export default {
       if (title == this.routeTitle) {
         this.$router.push(this.editableTabs[data - 1].content);
       } else {
-        this.cejv(this.editableTabs[data].title);
+        this.cejv();
       }
     },
   },
@@ -274,9 +286,13 @@ a {
 .tabStyle :hover a {
   padding-right: 0px;
 }
-.tabStyle:first-child :hover a {
+
+.tabStyle :first-child span a{
   padding-right: 19px;
 }
+/* .tabStyle:first-child :hover a {
+  padding-right: 19px;
+} */
 .tabStyle .activeLine {
   border-bottom: 1px solid #1890ff;
   height: 25px;
@@ -323,5 +339,21 @@ a {
   top: 50px;
   left: 225px;
   z-index: 2000;
+}
+.collapsed {
+  position: fixed;
+  left: 80px;
+}
+.expanded {
+  position: fixed;
+  left: 225px;
+}
+.arrow-left {
+  position: fixed;
+  left: 65px;
+}
+.el-button--primary:focus,
+.el-button--primary:hover {
+  background: #fff;
 }
 </style>

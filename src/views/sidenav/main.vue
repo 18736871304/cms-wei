@@ -117,7 +117,6 @@ export default {
     handleclose() {},
 
     handleselect(key, keyPath) {
-      console.log(key, keyPath);
       if (key == null) {
         return;
       }
