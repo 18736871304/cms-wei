@@ -175,9 +175,9 @@ export default {
   height: 50px;
   /* background: url(../../assets/header.jpg) no-repeat center; */
   background-size: 100% 100%;
-  border: 1px solid #eee;
+  /* border: 1px solid #eee;
   border-left: 0;
-  border-bottom: 0;
+  border-bottom: 0; */
 }
 
 .menu-expanded {

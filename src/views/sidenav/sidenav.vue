@@ -116,39 +116,31 @@ export default {
 
     move(direction) {
       if (direction === "left") {
-        this.$refs.titleNav.$el.scrollLeft =
-          this.$refs.titleNav.$el.scrollLeft - 300;
+        this.$refs.titleNav.$el.scrollLeft -= 300;
       } else {
-        this.$refs.titleNav.$el.scrollLeft =
-          this.$refs.titleNav.$el.scrollLeft + 300;
+        this.$refs.titleNav.$el.scrollLeft += 300;
       }
     },
 
     cejv(title) {
       var pageWidth = document.documentElement.clientWidth - 240;
+
       if (this.$refs["titleNav"] != undefined) {
-        var navWidth = this.$refs["titleNav"].$el.clientWidth;
+        var navWidth = this.$refs.titleNav.$el.scrollWidth;
       } else {
         var navWidth = 69;
       }
-      if (navWidth >= pageWidth) {
+
+      console.log(navWidth, pageWidth);
+
+      if (navWidth > pageWidth) {
         this.gudingWidth = pageWidth;
+        this.$refs.titleNav.$el.scrollLeft += 300;
         this.isShow = true;
       } else {
         this.isShow = false;
       }
-      for (var i = 0; i < this.editableTabs.length; i++) {
-        if (this.editableTabs[i].title == title) {
-          this.scrollLeftNum = this.editableTabs[i].name;
-        }
-      }
-      if (Number(this.scrollLeftNum) < 11) {
-        if (this.$refs.titleNav != undefined) {
-          this.$refs.titleNav.$el.scrollLeft = 0;
-        }
-      } else {
-        this.$refs.titleNav.$el.scrollLeft = 2800;
-      }
+
     },
 
     //添加面包屑  子父传值， 父元素在这里接受子元素传递过来的值
@@ -183,12 +175,6 @@ export default {
         this.$router.push(this.editableTabs[data - 1].content);
       } else {
         this.cejv(this.editableTabs[data].title);
-      }
-      if (this.editableTabs.length <= 10) {
-        this.isShow = false;
-      } else {
-        this.gudingWidth = document.documentElement.clientWidth - 240;
-        this.isShow = true;
       }
     },
   },
@@ -288,8 +274,7 @@ a {
 .tabStyle :hover a {
   padding-right: 0px;
 }
-
-.tabStyle:nth-child(1) span .lineBox {
+.tabStyle:first-child :hover a {
   padding-right: 19px;
 }
 .tabStyle .activeLine {
@@ -336,6 +321,7 @@ a {
   border-top: 2px solid #eee;
   position: fixed;
   top: 50px;
+  left: 225px;
   z-index: 2000;
 }
 </style>

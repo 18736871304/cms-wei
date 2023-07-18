@@ -8,7 +8,7 @@
       active-text-color="#fff"
       unique-opened
       router
-      :default-active="$router.path"
+      :default-active="String(this.$route.path)"
       class="el-menu-vertical-demo"
       @open="handleopen"
       @close="handleclose"
@@ -82,8 +82,12 @@ export default {
     },
     defaultActive() {
       return this.$router.path;
+    }, activeNav() {
+      //当前激活的导航
+      return this.$route.path;
     },
   }),
+
 
   watch: {
     activeRouter: {
