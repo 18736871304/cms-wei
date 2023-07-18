@@ -3,6 +3,7 @@
     <div class="search">
       <div class="common_hang">
         <div class="mech">机构名称</div>
+   
         <el-input
           v-model="organName"
           placeholder="请输入机构名称"

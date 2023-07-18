@@ -1,7 +1,12 @@
 <template>
   <el-col :span="24" class="header">
-    <el-col :span="1"   :class="isCollapse ? 'head_logo' : 'big_logo'" >
-      <img src="../../assets/logo.png" alt=""    :class="isCollapse ? 'logo_img' : 'big_logo_img'"           class="logo_img" />
+    <el-col :span="1" :class="isCollapse ? 'head_logo' : 'big_logo'">
+      <img
+        src="../../assets/logo.png"
+        alt=""
+        :class="isCollapse ? 'logo_img' : 'big_logo_img'"
+        class="logo_img"
+      />
     </el-col>
     <!-- <el-col
       :span="14"
@@ -34,23 +39,9 @@
           nav1
         </p>
       </el-tooltip>
-    </el-col>
-    <el-col :span="2" class="nav_head">
-      <el-tooltip class="item" effect="dark" content="" placement="nav2">
-        <p class="nav_head" multiBtn @click="$router.push('/page2')">
-          nav2
-        </p>
-      </el-tooltip>
-    </el-col>
-    <el-col :span="2" class="nav_head">
-      <el-tooltip class="item" effect="dark" content="" placement="nav3">
-        <p class="nav_head" multiBtn @click="$router.push('/page3')">
-          nav3
-        </p>
-      </el-tooltip>
-    </el-col>
+    </el-col>-->
 
-    <el-col :span="2">
+    <!-- <el-col :span="2" style="float: right;">
       <el-dropdown trigger="hover" placement="bottom" @command="handleCommand">
         <p class="el-dropdown-link nav_head" multiBtn command="profile">
           nav4<i class="el-icon-arrow-down el-icon--right"></i>
@@ -81,6 +72,23 @@
         </el-dropdown-menu>
       </el-dropdown>
     </el-col>
+    <el-col :span="1" class="nav_head" style="float: right;">
+      <el-tooltip class="item" effect="dark" content="" placement="nav3">
+        <p class="nav_head" multiBtn>
+          nav3
+        </p>
+      </el-tooltip>
+    </el-col>
+    <el-col :span="2" class="nav_head" style="float: right;">
+      <el-tooltip class="item" effect="dark" content="" placement="nav2">
+        <div class="nav_head" multiBtn>
+          <i class=" fa-light fa-expand"></i>
+          <!-- <div class="full-screen" @click="toFullOrExit">
+            <img :src="fullImg" />
+          </div> -->
+        </div>
+      </el-tooltip>
+    </el-col>
   </el-col>
 </template>
 
@@ -93,6 +101,7 @@ export default {
       sysUserName: "",
       sysUserAvatar: "",
       isCollapse: false,
+      fullImg: "",
     };
   },
 
@@ -139,6 +148,38 @@ export default {
         })
         .catch(() => {});
     },
+
+    requestFullScreen() {
+      let de = document.documentElement;
+      if (de.requestFullscreen) {
+        de.requestFullscreen();
+      } else if (de.mozRequestFullScreen) {
+        de.mozRequestFullScreen();
+      } else if (de.webkitRequestFullScreen) {
+        de.webkitRequestFullScreen();
+      }
+    },
+    exitFullscreen() {
+      let de = document;
+      if (de.exitFullscreen) {
+        de.exitFullscreen();
+      } else if (de.mozCancelFullScreen) {
+        de.mozCancelFullScreen();
+      } else if (de.webkitCancelFullScreen) {
+        de.webkitCancelFullScreen();
+      }
+    },
+    toFullOrExit() {
+      this.isFull = !this.isFull;
+      if (this.isFull) {
+        // this.fullImg = require("@/assets/logo.png");
+        this.requestFullScreen();
+      } else {
+        // this.fullImg = require("@/assets/logo.png");
+        this.exitFullscreen();
+      }
+    },
+
     // nav1: function() {
     //   this.$router.push({
     //     path: "/from",
@@ -185,18 +226,18 @@ export default {
   width: 230px;
 }
 .logo_img {
-  width: 60px;
+  width: 50px;
   height: 50px;
 }
 
-.big_logo{
+.big_logo {
   width: 209.5px;
-    background: #001529;
-    height: 50px;
+  background: #001529;
+  height: 50px;
 }
-.big_logo_img{
-  width: 160px;
-    height: 50px;
+.big_logo_img {
+  width: 150px;
+  height: 50px;
 }
 .logo {
   width: 145.5px;
@@ -204,7 +245,7 @@ export default {
   text-align: center;
   background: #001529;
   height: 100%;
-  line-height: 60px;
+  line-height: 50px;
 }
 .nologo {
   display: none;
@@ -212,9 +253,9 @@ export default {
 
 .nav_head {
   font-size: 14px;
-  color: #fff;
+
   text-align: center;
-  line-height: 60px;
+  line-height: 50px;
   cursor: pointer;
   margin: 0 auto;
 }
@@ -222,13 +263,13 @@ export default {
 .tools {
   padding: 0px 23px;
   width: 40px;
-  line-height: 60px;
+  line-height: 50px;
   cursor: pointer;
 }
 .el-icon-s-fold {
   font-size: 34px;
   color: #999;
-  line-height:50px;
+  line-height: 50px;
 }
 .userinfo-inner {
   display: inline-block;
@@ -265,7 +306,7 @@ export default {
   margin: 15px auto;
 }
 .userinfo {
-  width: 60px;
+  width: 50px;
   float: right;
   cursor: pointer;
 }
@@ -286,8 +327,6 @@ export default {
   /* overflow-y: scroll; */
 }
 
-
-
 ::-webkit-scrollbar {
   width: 6px;
   height: 1px;
@@ -307,7 +346,7 @@ export default {
 }
 
 .collapsed {
-  width: 60px;
+  width: 50px;
 }
 .item {
   position: relative;
@@ -316,7 +355,7 @@ export default {
 .submenu {
   position: absolute;
   top: 0px;
-  left: 60px;
+  left: 50px;
   z-index: 99999;
   height: auto;
   display: none;
