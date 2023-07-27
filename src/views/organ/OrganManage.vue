@@ -1,9 +1,9 @@
 <template>
-  <div style="  padding: 30px 30px 10px;">
+  <div class="OrganManage">
     <div class="search">
       <div class="common_hang">
         <div class="mech">机构名称</div>
-   
+
         <el-input
           v-model="organName"
           placeholder="请输入机构名称"
@@ -43,8 +43,13 @@
         :data="organList"
         :stripe="true"
         border
-        height="400"
-        :header-cell-style="{ background: '#f3f6fd', color: '#555' }"
+        :height="tableHeight"
+        :row-style="{ height: '50px' }"
+        :header-cell-style="{
+          background: '#f3f6fd',
+          color: '#555',
+          height: '50px',
+        }"
         highlight-current-row
         style="width: 100%;"
       >
@@ -54,7 +59,6 @@
           label="机构编码"
           width="110"
           align="center"
-          sortable
         ></el-table-column>
         <el-table-column
           prop="organName"
@@ -129,6 +133,8 @@
         :visible.sync="dialogFormVisible"
         :before-close="handleClose"
         :close-on-click-modal="false"
+        width="56%"
+        style="text-align: left;"
       >
         <div class="dig">
           <div class="dig_box">
@@ -272,6 +278,8 @@ export default {
       cityNameList: [],
       countyNameList: [],
       //添加、修改
+      dig_title: "新增",
+      dialogFormVisible: false,
       editOrganCode: "",
       editOrganName: "",
       editOrganGrade: "",
@@ -280,17 +288,30 @@ export default {
       editprovinceName: "",
       editcityName: "",
       editcountyName: "",
-      dig_title: "新增",
-      dialogFormVisible: false,
+
       // 分页
       pageTotal: 0,
       pageSize: 20,
       pageNum: 1,
+      tableHeight: 0,
     };
   },
   created() {
+    // 100是表格外其它布局占的高度，这个数值根据自己实际情况修改   多一行筛选就多加35
+    this.tableHeight = window.innerHeight - 295;
     this.init();
   },
+  mounted() {
+    // 设置表格高度
+    this.tableHeight = window.innerHeight - 295;
+    // / 监听浏览器窗口变化，动态计算表格高度，
+    window.onresize = () => {
+      return (() => {
+        this.tableHeight = window.innerHeight - 295;
+      })();
+    };
+  },
+
   methods: {
     // 初始化
     init() {
@@ -306,22 +327,26 @@ export default {
       disComBox(params1).then((res) => {
         this.isstopList = res;
       });
-
       provinceCombox().then((res) => {
-        console.log(res);
         this.provinceNameList = res;
       });
-      // this.getorganList(1);
     },
     getCity() {
+      this.editcityName = "";
+      this.editcountyName = "";
+      if (this.editprovinceName == "") {
+        return;
+      }
       cityCombox({ province: this.editprovinceName }).then((res) => {
-        console.log(res);
         this.cityNameList = res;
       });
     },
     getcounty() {
+      this.editcountyName = "";
+      if (this.editcityName == "") {
+        return;
+      }
       countyCombox({ city: this.editcityName }).then((res) => {
-        console.log(res);
         this.countyNameList = res;
       });
     },
@@ -370,41 +395,41 @@ export default {
 
       console.log(params);
 
-      if (this.isinsert) {
-        organinsert(params).then((res) => {
-          console.log(res);
-          if (res.code == "0") {
-            that.$message({
-              type: "success",
-              duration: 3000,
-              message: "添加成功",
-            });
-          } else {
-            that.$message({
-              type: "error",
-              duration: 3000,
-              message: "添加失败",
-            });
-          }
-        });
-      } else {
-        organUpdate(params).then((res) => {
-          console.log(res);
-          if (res.code == "0") {
-            that.$message({
-              type: "success",
-              duration: 3000,
-              message: "修改成功",
-            });
-          } else {
-            that.$message({
-              type: "error",
-              duration: 3000,
-              message: "修改失败",
-            });
-          }
-        });
-      }
+      // if (this.isinsert) {
+      //   organinsert(params).then((res) => {
+      //     console.log(res);
+      //     if (res.code == "0") {
+      //       that.$message({
+      //         type: "success",
+      //         duration: 3000,
+      //         message: "添加成功",
+      //       });
+      //     } else {
+      //       that.$message({
+      //         type: "error",
+      //         duration: 3000,
+      //         message: "添加失败",
+      //       });
+      //     }
+      //   });
+      // } else {
+      //   organUpdate(params).then((res) => {
+      //     console.log(res);
+      //     if (res.code == "0") {
+      //       that.$message({
+      //         type: "success",
+      //         duration: 3000,
+      //         message: "修改成功",
+      //       });
+      //     } else {
+      //       that.$message({
+      //         type: "error",
+      //         duration: 3000,
+      //         message: "修改失败",
+      //       });
+      //     }
+      //   });
+      // }
     },
 
     handleEdit(item) {
@@ -416,17 +441,15 @@ export default {
       this.editisstop = item.isstop;
 
       this.editprovinceName = item.province;
-      this.getCity();//把数字改成汉字
+      this.getCity(); //把数字改成汉字
       this.editcityName = item.city;
-      this.getcounty();//把数字改成汉字
+      this.getcounty(); //把数字改成汉字
       this.editcountyName = item.county;
 
       this.dialogFormVisible = true;
-      this.isinsert = false;//一次判断是添加还是编辑
+      this.isinsert = false; //一次判断是添加还是编辑
       this.dig_title = "编辑";
     },
-
-
 
     handleDel(item) {
       var that = this;
@@ -491,7 +514,15 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.OrganManage {
+  padding: 30px 30px 10px;
+  margin-bottom: -15px;
+}
+.search {
+  display: flex;
+  padding-bottom: 20px;
+}
 /* 这是筛选项的内容 */
 .common_hang {
   display: flex;
@@ -516,35 +547,29 @@ export default {
 .common_hang .el-select .el-input {
   width: 150px;
 }
-.search {
-  display: flex;
-  padding-bottom: 20px;
-}
-.el-pagination {
-  text-align: right;
+
+/* 筛选项结束 */
+.dig {
+  text-align: center;
 }
 .indexPage {
   text-align: right;
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.el-dialog__header {
-  padding: 0;
-}
-.dig {
-  /* margin-top: 40px; */
-}
 .dig_box {
   display: flex;
-  /* justify-content: center; */
   align-content: center;
   margin-bottom: 25px;
 }
-.el-dialog {
-  width: 60%;
-  padding: 30px;
+
+.common_hang .el-select {
+  width: 150px;
 }
-.el-dialog__header {
-  text-align: left;
+
+.el-button--primary {
+  height: 35px !important;
+  /* line-height: 35px!important;
+  text-align: center!important; */
 }
 </style>

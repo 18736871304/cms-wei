@@ -97,7 +97,8 @@ export default {
     },
 
     $route: {
-      handler: function(route) {
+      handler: function(route,aa) {
+        console.log(route,aa)
         this.routeTitle = route.name;
         this.cejv();
       },
@@ -148,7 +149,7 @@ export default {
 
       if (navWidth > pageWidth) {
         this.gudingWidth = pageWidth;
-        this.$refs.titleNav.$el.scrollLeft += 300;
+        this.$refs.titleNav.$el.scrollLeft += 120;
         this.isShow = true;
       } else {
         this.isShow = false;
@@ -193,8 +194,8 @@ export default {
 };
 </script>
 
-<style>
-.hengxian {
+<style scoped>
+/* .hengxian {
   height: 13px;
   width: 100%;
   background: #e3e9ed;
@@ -215,14 +216,13 @@ export default {
 .title {
   width: 200px;
   float: left;
-  /* color: #475669; */
 }
 
 .breadcrumb-inner {
   float: left !important;
   font-size: 21px;
   line-height: 50px;
-}
+} */
 
 .content-wrapper {
   background-color: #fff;
@@ -270,6 +270,7 @@ a {
   display: flex;
   height: 52px;
   overflow-x: scroll;
+  overflow-y: hidden;
   top: 52px;
 }
 .el-button--primary:active {
@@ -287,12 +288,9 @@ a {
   padding-right: 0px;
 }
 
-.tabStyle :first-child span a{
+.tabStyle:nth-child(1) :hover a {
   padding-right: 19px;
 }
-/* .tabStyle:first-child :hover a {
-  padding-right: 19px;
-} */
 .tabStyle .activeLine {
   border-bottom: 1px solid #1890ff;
   height: 25px;
@@ -322,7 +320,7 @@ a {
 .el-icon-d-arrow-left {
   position: fixed;
   top: 52px;
-  left: 210px;
+  left: 190px;
 }
 .el-icon-d-arrow-right {
   position: fixed;
@@ -346,12 +344,14 @@ a {
 }
 .expanded {
   position: fixed;
-  left: 225px;
+  left: 207px;
 }
 .arrow-left {
   position: fixed;
   left: 65px;
 }
+</style>
+<style scoped>
 .el-button--primary:focus,
 .el-button--primary:hover {
   background: #fff;

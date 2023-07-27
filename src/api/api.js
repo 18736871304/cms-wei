@@ -30,7 +30,7 @@ export const cityCombox = params => {
 export const countyCombox = params => {
   return axios.post(`/organ/countyCombox.do`, Qs.stringify(params)).then(res => res.data);
 };
-//机构级别
+//机构级别  数据字典
 export const disComBox = params => {
   return axios.post(`/combox/disComBox.do`, Qs.stringify(params)).then(res => res.data);
 };
@@ -65,6 +65,52 @@ export const organUpdate = params => {
 };
 
 
+//获取省公司
+export const get02Org = params => {
+  return axios.post(`/policy/get02Org.do`, Qs.stringify(params)).then(res => res.data);
+};
+
+//获取分公司
+export const get03Org= params => {
+  return axios.post(`/policy/get03Org.do`, Qs.stringify(params)).then(res => res.data);
+};
+//获取营业部
+export const get04Org= params => {
+  return axios.post(`/policy/get04Org.do`, Qs.stringify(params)).then(res => res.data);
+};
+//获取事业部
+export const getTeamListByOrgan= params => {
+  return axios.post(`/team/getTeamListByOrgan.do`, Qs.stringify(params)).then(res => res.data);
+};
+
+//获取团队
+export const getTeamListByUpTeamId= params => {
+  return axios.post(`/team/getTeamListByUpTeamId.do`, Qs.stringify(params)).then(res => res.data);
+};
+// //获取组
+// export const getTeamListByUpTeamId= params => {
+//   return axios.post(`/team/getTeamListByUpTeamId.do`, Qs.stringify(params)).then(res => res.data);
+// };
+
+// 获取团队数据
+export const getTeamList= params => {
+  return axios.post(`/team/getTeamList.do`, Qs.stringify(params)).then(res => res.data);
+};
 
 
+// 获取员工信息
+export const getUserList= params => {
+  return axios.post(`/authority/getUserList.do`, Qs.stringify(params)).then(res => res.data);
+};
 
+
+// 所属机构
+export const organdlgquery= params => {
+  return axios.post(`/organ/organdlgquery.do`, Qs.stringify(params)).then(res => res.data);
+};
+
+
+//获取保险产品
+export const getRiskdefineList20= params => {
+  return axios.post(`/supplier/getRiskdefineList20.do`, Qs.stringify(params)).then(res => res.data);
+};

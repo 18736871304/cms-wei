@@ -50,15 +50,11 @@ export default {
   line-height: 60px;
   cursor: pointer;
 }
-.el-icon-s-fold {
-  font-size: 34px;
-  color: #999;
-  line-height: 50px;
-}
+
 .userinfo-inner {
   display: inline-block;
 }
-.username {
+/* .username {
   font-size: 15px;
   color: #999;
   display: inline-block;
@@ -66,15 +62,15 @@ export default {
 .username span {
   margin-left: 10px;
   margin-right: 5px;
-}
+} */
 
-.userinfo-inner img {
+/* .userinfo-inner img {
   width: 40px;
   height: 40px;
   margin: 5px auto;
   vertical-align: middle;
   border-radius: 50%;
-}
+} */
 .huanfu {
   width: 35px;
   height: 35px;
@@ -89,14 +85,12 @@ export default {
   fill: currentColor;
   margin: 15px auto;
 }
-.userinfo {
-  width: 60px;
+/* .userinfo {
+  
   float: right;
   cursor: pointer;
-}
-.userinfo1 {
-  width: 200px;
-}
+} */
+
 
 .main {
   display: flex;

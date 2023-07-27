@@ -15,21 +15,13 @@
       >{{ sysName }}</el-col
     > -->
 
-    <el-col :span="2">
+    <el-col :span="1">
       <el-radio-group
         v-model="isCollapse"
         :class="isCollapse ? 'el-radio-group1' : 'el-radio-group gg'"
       >
-        <i
-          v-show="!isCollapse"
-          class="el-icon-s-fold expandBtn"
-          @click="Collapse"
-        ></i>
-        <i
-          v-show="isCollapse"
-          class="el-icon-s-fold shrinkBtn"
-          @click="noCollapse"
-        ></i>
+        <i v-show="!isCollapse" class="el-icon-s-fold" @click="Collapse"></i>
+        <i v-show="isCollapse" class="el-icon-s-unfold" @click="noCollapse"></i>
       </el-radio-group>
     </el-col>
 
@@ -59,7 +51,7 @@
         <div class="el-dropdown-link userinfo-inner">
           <img src="../../assets/user.png" />
           <div class="username">
-            <span>用户，您好</span>
+            <span>魏钦录,退出</span>
             <i class="el-icon-caret-bottom"></i>
           </div>
         </div>
@@ -72,22 +64,32 @@
         </el-dropdown-menu>
       </el-dropdown>
     </el-col>
+
     <el-col :span="1" class="nav_head" style="float: right;">
-      <el-tooltip class="item" effect="dark" content="" placement="nav3">
-        <p class="nav_head" multiBtn>
-          nav3
-        </p>
-      </el-tooltip>
-    </el-col>
-    <el-col :span="2" class="nav_head" style="float: right;">
-      <el-tooltip class="item" effect="dark" content="" placement="nav2">
-        <div class="nav_head" multiBtn>
-          <i class=" fa-light fa-expand"></i>
-          <!-- <div class="full-screen" @click="toFullOrExit">
-            <img :src="fullImg" />
-          </div> -->
+      <el-popover placement="bottom" width="350" trigger="click">
+        <div class="message">
+          <ul>
+            <li>消息一</li>
+            <li>消息二</li>
+            <li>消息三</li>
+            <li>消息四</li>
+          </ul>
         </div>
-      </el-tooltip>
+        <i slot="reference" class="el-icon-bell"></i>
+      </el-popover>
+    </el-col>
+    <el-col :span="1" class="nav_head" style="float: right;">
+      <el-radio-group
+        v-model="isFull"
+        :class="isFull ? 'el-radio-group1' : 'el-radio-group gg'"
+      >
+        <i
+          v-show="!isFull"
+          class="el-icon-full-screen"
+          @click="toFullOrExit"
+        ></i>
+        <i v-show="isFull" class="el-icon-aim" @click="toFullOrExit"></i>
+      </el-radio-group>
     </el-col>
   </el-col>
 </template>
@@ -102,7 +104,21 @@ export default {
       sysUserAvatar: "",
       isCollapse: false,
       fullImg: "",
+      isFull: false,
     };
+  },
+
+  mounted() {
+    let that = this;
+    window.addEventListener("resize", function() {
+      if (!that.isFullScreen()) {
+        if (that.isFull) {
+          that.isFull = !that.isFull;
+        }
+        // 非全屏状态
+        //业务逻辑
+      }
+    });
   },
 
   methods: {
@@ -148,7 +164,7 @@ export default {
         })
         .catch(() => {});
     },
-
+    // 全屏
     requestFullScreen() {
       let de = document.documentElement;
       if (de.requestFullscreen) {
@@ -159,6 +175,7 @@ export default {
         de.webkitRequestFullScreen();
       }
     },
+    // 退出全屏
     exitFullscreen() {
       let de = document;
       if (de.exitFullscreen) {
@@ -169,8 +186,22 @@ export default {
         de.webkitCancelFullScreen();
       }
     },
+    //全屏
+    fullele() {
+      return (
+        document.fullscreenElement ||
+        document.webkitFullscreenElement ||
+        document.msFullscreenElement ||
+        document.mozFullScreenElement ||
+        null
+      );
+    }, //判断是否全屏
+    isFullScreen() {
+      return !!(document.webkitIsFullScreen || this.fullele());
+    },
     toFullOrExit() {
       this.isFull = !this.isFull;
+      console.log(this.isFull);
       if (this.isFull) {
         // this.fullImg = require("@/assets/logo.png");
         this.requestFullScreen();
@@ -179,28 +210,6 @@ export default {
         this.exitFullscreen();
       }
     },
-
-    // nav1: function() {
-    //   this.$router.push({
-    //     path: "/from",
-    //   });
-    // },
-    //个人信息路由跳转
-    // handleCommand(command) {
-    //   if (command === "profile") {
-    //     this.$router.push({
-    //       path: "/from",
-    //     });
-    //   } else if (command === "updatePass") {
-    //     this.$router.push({
-    //       path: "/list",
-    //     });
-    //   } else if (command == "logout") {
-    //     this.$router.push({
-    //       path: "/table",
-    //     });
-    //   }
-    // },
   },
 };
 </script>
@@ -214,11 +223,7 @@ export default {
 .header {
   width: 100%;
   height: 50px;
-  /* background: url(../../assets/header.jpg) no-repeat center; */
   background-size: 100% 100%;
-  /* border: 1px solid #eee;
-  border-left: 0;
-  border-bottom: 0; */
 }
 
 .menu-expanded {
@@ -231,7 +236,7 @@ export default {
 }
 
 .big_logo {
-  width: 209.5px;
+  width: 189.5px;
   background: #001529;
   height: 50px;
 }
@@ -253,7 +258,7 @@ export default {
 
 .nav_head {
   font-size: 14px;
-
+  width: 50px;
   text-align: center;
   line-height: 50px;
   cursor: pointer;
@@ -266,17 +271,23 @@ export default {
   line-height: 50px;
   cursor: pointer;
 }
-.el-icon-s-fold {
-  font-size: 34px;
-  color: #999;
+
+.el-icon-full-screen,
+.el-icon-aim,
+.el-icon-bell,
+.el-icon-s-fold,
+.el-icon-s-unfold {
+  font-size: 20px;
+  color: #000000d9;
   line-height: 50px;
+  cursor: pointer;
 }
 .userinfo-inner {
   display: inline-block;
 }
 .username {
   font-size: 15px;
-  color: #999;
+  color: #000000d9;
   display: inline-block;
 }
 .username span {
@@ -285,8 +296,8 @@ export default {
 }
 
 .userinfo-inner img {
-  width: 40px;
-  height: 40px;
+  width: 24px;
+  height: 24px;
   margin: 5px auto;
   vertical-align: middle;
   border-radius: 50%;
@@ -306,12 +317,14 @@ export default {
   margin: 15px auto;
 }
 .userinfo {
-  width: 50px;
+  height: 50px;
+  line-height: 50px;
   float: right;
   cursor: pointer;
 }
 .userinfo1 {
-  width: 200px;
+  width: 145px;
+  margin-right: 20px;
 }
 
 .main {
@@ -324,7 +337,6 @@ export default {
 .main aside {
   flex: 0 0 210px;
   width: 210px;
-  /* overflow-y: scroll; */
 }
 
 ::-webkit-scrollbar {
@@ -335,13 +347,10 @@ export default {
 /* 滑块部分 */
 ::-webkit-scrollbar-thumb {
   border-radius: 5px;
-  /* background-color:red; */
   background-color: #9093994d;
 }
 /* 轨道部分 */
 ::-webkit-scrollbar-track {
-  /* box-shadow: inset 0 0 5px rgba(0, 0, 0, 0.2); */
-  /* background: #001529; */
   border-radius: 5px;
 }
 
@@ -395,5 +404,14 @@ export default {
   justify-content: center;
   align-items: center;
   background: #001529;
+}
+.message ul {
+  /* margin: 10px;
+   padding: 10px; */
+}
+
+.message ul li {
+  height: 30px;
+  line-height: 30px;
 }
 </style>

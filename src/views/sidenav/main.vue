@@ -82,12 +82,12 @@ export default {
     },
     defaultActive() {
       return this.$router.path;
-    }, activeNav() {
+    },
+    activeNav() {
       //当前激活的导航
       return this.$route.path;
     },
   }),
-
 
   watch: {
     activeRouter: {
@@ -101,18 +101,6 @@ export default {
 
   methods: {
     handleopen(routerName) {
-      // console.log(routerName);
-      // var aa = [];
-      // let rightList = eval("(" + this.$store.state.rightList + ")");
-      // for (var i = 0; i < rightList.length; i++) {
-      //   let rightchildmenu = rightList[i].childmenu;
-      //   for (var j = 0; j < rightchildmenu.length; j++) {
-      //     if (rightchildmenu[j].menuname == routerName.name) {
-      //       console.log(rightchildmenu);
-      //       this.$refs.menu.open(i, rightchildmenu[j].path);
-      //     }
-      //   }
-      // }
     },
     handleclose() {},
 
@@ -146,7 +134,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .shrinkBtn {
   width: 100%;
   transform: rotate(180deg);
@@ -164,14 +152,9 @@ export default {
 }
 .header {
   width: 100%;
-  /* background: #20a0ff; */
 }
 
-.el-icon-s-fold {
-  font-size: 34px;
-  color: #001529;
-  line-height: 50px;
-}
+
 
 .username {
   font-size: 15px;
@@ -269,8 +252,5 @@ menu-collapsed.main aside .submenu {
 }
 .el-menu .is-active {
   background: #1890ff !important;
-}
-.el-submenu__title {
-  /* font-weight: bold; */
 }
 </style>
