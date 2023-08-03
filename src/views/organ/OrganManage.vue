@@ -6,7 +6,7 @@
 
         <el-input
           v-model="organName"
-          placeholder="请输入机构名称"
+          placeholder="请输入"
           clearable
         ></el-input>
       </div>
