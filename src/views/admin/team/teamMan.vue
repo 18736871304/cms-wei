@@ -378,7 +378,7 @@ export default {
     getTeamList(page) {
       var that = this;
       var getsonDatas = this.$children[0].selectValue;
-      console.log(getsonDatas);
+      this.pageNum = page;
       var reporParams = {
         teamname: this.teamName,
         teamgrade: this.teamgradeValue,

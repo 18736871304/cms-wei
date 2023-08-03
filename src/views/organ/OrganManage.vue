@@ -354,6 +354,7 @@ export default {
     // 获取表单
     getorganList(page) {
       console.log(this.isstop);
+      this.pageNum = page;
       var that = this;
       var reporParams = {
         organName: this.organName,
@@ -447,7 +448,7 @@ export default {
       this.editcountyName = item.county;
 
       this.dialogFormVisible = true;
-      this.isinsert = false; //一次判断是添加还是编辑
+      this.isinsert = false; //以此判断是添加还是编辑
       this.dig_title = "编辑";
     },
 
@@ -455,28 +456,36 @@ export default {
       var that = this;
       this.$confirm("确认删除吗?", "提示", {
         type: "warning",
-      }).then(() => {
-        var reporParams = {
-          userToken: sessionStorage.getItem("token"),
-          userid: item.userserialno,
-        };
-        deleteUser(reporParams).then((res) => {
-          if (res.code == "0") {
-            that.$message({
-              type: "success",
-              duration: 3000,
-              message: "删除成功",
-            });
-            that.getUserList(1);
-          } else {
-            that.$message({
-              type: "error",
-              duration: 3000,
-              message: "删除失败",
-            });
-          }
+      })
+        .then(() => {
+          var reporParams = {
+            userToken: sessionStorage.getItem("token"),
+            userid: item.userserialno,
+          };
+          // deleteUser(reporParams).then((res) => {
+          //   if (res.code == "0") {
+          //     that.$message({
+          //       type: "success",
+          //       duration: 3000,
+          //       message: "删除成功",
+          //     });
+          //     that.getUserList(1);
+          //   } else {
+          //     that.$message({
+          //       type: "error",
+          //       duration: 3000,
+          //       message: "删除失败",
+          //     });
+          //   }
+          // });
+        })
+        .catch(() => {
+          // 取消操作  
+          this.$message({
+            type: "info",
+            message: "已取消",
+          });
         });
-      });
     },
     pageClick(page) {
       //点击分页

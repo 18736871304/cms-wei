@@ -29,11 +29,19 @@ export default {
 }
 .el-input__inner {
   height: 35px !important;
-  line-height: 35px!important;
-  border-radius: 0!important;
+  line-height: 35px !important;
+  border-radius: 0 !important;
 }
 
-.el-table .el-table__cell{
-   padding: 0 !important;
+.el-table .el-table__cell {
+  padding: 0 !important;
+}
+a {
+  text-decoration: none;
+}
+.el-textarea__inner {
+  height: 35px !important;
+  min-height: 35px !important;
+  border-radius: 0 !important;
 }
 </style>

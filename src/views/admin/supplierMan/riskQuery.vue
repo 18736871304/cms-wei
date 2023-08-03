@@ -220,6 +220,7 @@ export default {
     },
 
     getRiskdefineList20(page) {
+      this.pageNum = page;
       var reporParams = {
         insorgancode: this.insorgancode,
         riskname: this.riskname,
